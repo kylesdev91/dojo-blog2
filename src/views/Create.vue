@@ -18,7 +18,6 @@
 <script>
 import { ref } from '@vue/reactivity'
 import { useRouter } from 'vue-router'
-import HomeViewVue from './HomeView.vue'
 
 export default {
   setup() {
@@ -33,6 +32,7 @@ export default {
       if (!tags.value.includes(tag.value)) {
         tag.value = tag.value.replace(/\s/, '') // removes all whitespace 
         tags.value.push(tag.value)
+        alert('Successfully Added Post!')
       } else {
            alert('Tag already exists, create a new one!')
       }
