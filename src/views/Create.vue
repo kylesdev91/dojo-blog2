@@ -18,6 +18,7 @@
 <script>
 import { ref } from '@vue/reactivity'
 import { useRouter } from 'vue-router'
+import { projectFirestore } from '@/firebase/config'
 
 export default {
   setup() {
@@ -32,7 +33,7 @@ export default {
       if (!tags.value.includes(tag.value)) {
         tag.value = tag.value.replace(/\s/, '') // removes all whitespace 
         tags.value.push(tag.value)
-        alert('Successfully Added Post!')
+        alert('Successfully create post, click Add Post to Add.')
       } else {
            alert('Tag already exists, create a new one!')
       }
@@ -45,12 +46,9 @@ export default {
         body: body.value,
         tags: tags.value
       }
+      const res = await projectFirestore.collection('posts').add(post)
+      // console.log(res )
 
-      await fetch('http://localhost:3000/posts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify(post)
-      })
       router.push({name: 'home'})
     }
 
