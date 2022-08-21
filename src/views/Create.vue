@@ -18,7 +18,7 @@
 <script>
 import { ref } from '@vue/reactivity'
 import { useRouter } from 'vue-router'
-import { projectFirestore } from '@/firebase/config'
+import { projectFirestore, timestamp } from '@/firebase/config'
 
 export default {
   setup() {
@@ -33,7 +33,7 @@ export default {
       if (!tags.value.includes(tag.value)) {
         tag.value = tag.value.replace(/\s/, '') // removes all whitespace 
         tags.value.push(tag.value)
-        alert('Successfully create post, click Add Post to Add.')
+        alert('Successfully created Tags, click Add Post to Add.')
       } else {
            alert('Tag already exists, create a new one!')
       }
@@ -44,7 +44,8 @@ export default {
       const post = {
         title: title.value,
         body: body.value,
-        tags: tags.value
+        tags: tags.value,
+        createdAt: timestamp()
       }
       const res = await projectFirestore.collection('posts').add(post)
       // console.log(res )
